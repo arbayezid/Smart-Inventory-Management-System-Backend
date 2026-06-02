@@ -13,8 +13,8 @@ app.use(cors());
 app.use(express.json());
 
 // Content type test
-app.get('/api', (req, res) => {
-  res.json({ message: 'Welcome to Inventory Management API' });
+app.get('/', (req, res) => {
+  res.send('Inventory Backend Running');
 });
 
 // Routes
@@ -40,10 +40,7 @@ if (!MONGO_URI) {
   process.exit(1);
 }
 
-mongoose.connect(MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(MONGO_URI)
   .then(() => {
     console.log('Connected to MongoDB');
 
@@ -75,7 +72,7 @@ mongoose.connect(MONGO_URI, {
     };
 
     process.on('SIGTERM', () => shutdown('SIGTERM'));
-    process.on('SIGINT',  () => shutdown('SIGINT'));
+    process.on('SIGINT', () => shutdown('SIGINT'));
   })
   .catch((error) => {
     console.error('MongoDB connection error:', error.message);
